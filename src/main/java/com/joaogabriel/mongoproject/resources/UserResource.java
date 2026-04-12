@@ -1,7 +1,5 @@
 package com.joaogabriel.mongoproject.resources;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.joaogabriel.mongoproject.domain.User;
+import com.joaogabriel.mongoproject.dto.UserDTO;
 import com.joaogabriel.mongoproject.service.UserService;
 
 @RestController
@@ -21,10 +19,11 @@ public class UserResource {
 	private UserService service;
 	
 	@GetMapping
-	public ResponseEntity<List<User>> findAll(){
+	public ResponseEntity<List<UserDTO>> findAll(){
 		
-		List<User> lista = service.findAll();
+		List<UserDTO> listaDto = service.findAll()
+				.stream().map(u -> new UserDTO(u)).toList();
 		
-		return ResponseEntity.ok().body(lista);
+		return ResponseEntity.ok().body(listaDto);
 	}
 }

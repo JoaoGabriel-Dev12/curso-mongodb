@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Configuration;
 
 import com.joaogabriel.mongoproject.domain.Post;
 import com.joaogabriel.mongoproject.domain.User;
+import com.joaogabriel.mongoproject.dto.AuthorDTO;
 import com.joaogabriel.mongoproject.repository.PostRepository;
 import com.joaogabriel.mongoproject.repository.UserRepository;
 
@@ -37,10 +38,11 @@ public class Config implements CommandLineRunner{
 		User alex = new User(null, "Alex Green", "alex@gmail.com");
 		User bob = new User(null, "Bob Grey", "bob@gmail.com");
 		
-		Post post1 = new Post(null, sdf.parse("12/04/2026"), "Partiu viagem!", "Vou para Goiânia!", maria);
-		Post post2 = new Post(null, sdf.parse("12/04/2026"), "No BJJ", "No pain no gain!!", maria);
-		
 		uRepository.saveAll(Arrays.asList(maria, alex, bob));
+		
+		Post post1 = new Post(null, sdf.parse("12/04/2026"), "Partiu viagem!", "Vou para Goiânia!", new AuthorDTO(maria));
+		Post post2 = new Post(null, sdf.parse("12/04/2026"), "No BJJ", "No pain no gain!!", new AuthorDTO(maria));
+		
 		pRepository.saveAll(Arrays.asList(post1, post2));
 		
 	}

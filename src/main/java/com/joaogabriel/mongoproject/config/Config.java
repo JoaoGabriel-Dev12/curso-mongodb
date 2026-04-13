@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Configuration;
 import com.joaogabriel.mongoproject.domain.Post;
 import com.joaogabriel.mongoproject.domain.User;
 import com.joaogabriel.mongoproject.dto.AuthorDTO;
+import com.joaogabriel.mongoproject.dto.CommentDTO;
 import com.joaogabriel.mongoproject.repository.PostRepository;
 import com.joaogabriel.mongoproject.repository.UserRepository;
 
@@ -43,10 +44,19 @@ public class Config implements CommandLineRunner{
 		Post post1 = new Post(null, sdf.parse("12/04/2026"), "Partiu viagem!", "Vou para Goiânia!", new AuthorDTO(maria));
 		Post post2 = new Post(null, sdf.parse("12/04/2026"), "No BJJ", "No pain no gain!!", new AuthorDTO(maria));
 		
+		CommentDTO c1 = new CommentDTO("Boa viagem irmão", sdf.parse("12/04/2026"), new AuthorDTO(alex));
+		CommentDTO c2 = new CommentDTO("Vai com Deus!", sdf.parse("12/04/2026"), new AuthorDTO(bob));
+		CommentDTO c3 = new CommentDTO("Treino hoje foi brabo!", sdf.parse("12/04/2026"), new AuthorDTO(bob));
+		
+		post1.addComments(Arrays.asList(c1, c2));
+		post2.addComments(Arrays.asList(c3));
+		
 		pRepository.saveAll(Arrays.asList(post1, post2));
 		
 		maria.addPosts(Arrays.asList(post1, post2));
 		uRepository.save(maria);
+		
+		
 	}
 
 }
